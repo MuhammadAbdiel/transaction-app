@@ -1,11 +1,13 @@
-<div class="modal fade" id="modal-customer-create" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="modal-customer-update" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalCenterTitle">Tambah Customer</h5>
+        <h5 class="modal-title" id="modalCenterTitle">Edit Customer</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form id="form-customer-create" action="{{ route('customer.store') }}" method="POST">
+      <form id="form-customer-update" action="{{ route('customer.update') }}" method="POST">
+        @method('PUT')
+        <input type="hidden" id="id" name="id">
         <div class="modal-body">
           <div class="row">
             <div class="col mb-3">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
 {
@@ -41,7 +42,15 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'kode' => 'required|string|unique:m_customer',
+            'nama' => 'required|string|max:255',
+            'telp' => 'required|numeric|unique:m_customer',
+        ]);
+
+        $data = $request->all();
+
+        Customer::create($data);
     }
 
     /**
@@ -73,9 +82,18 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'kode' => ['required', 'string', 'max:255', Rule::unique('m_customer')->ignore($request->id)],
+            'nama' => 'required|string|max:255',
+            'telp' => 'required|numeric',
+        ]);
+
+        $data = $request->all();
+
+        $customer = Customer::find($request->id);
+        $customer->update($data);
     }
 
     /**
@@ -84,8 +102,9 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer)
+    public function destroy(Request $request)
     {
-        //
+        $customer = Customer::find($request->id);
+        $customer->delete();
     }
 }

@@ -128,6 +128,10 @@
 @push('scripts')
 <script>
   $(document).ready(function() {
+    $('#tgl').bind('input', function(e) {
+      $(this).blur();
+    });
+    
     function calculateTotals() {
         let subTotal = 0;
         $('#detailsTable tbody tr').each(function() {
